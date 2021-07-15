@@ -1,13 +1,18 @@
 import "./App.css";
+import InputBar from "./components/InputBar.js";
+import ItemList from "./components/ItemList.js";
+// import { useState } from "react";
 
 export default function App() {
-  const toDoListItems = [
+  // const [inputs, setInputItem] = useState([]);
+
+  const toDoItems = [
     {
       todo: "workout", //string
       isDone: false, //boolean
     },
     {
-      todo: "massage",
+      todo: "get massage",
       isDone: true,
     },
     {
@@ -15,25 +20,23 @@ export default function App() {
       isDone: false,
     },
   ];
-  //console.log(toDoListItems);
+  console.log(toDoItems);
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("I got submitted.");
   }
 
   return (
     <div className="App">
       <h1>To-Do App</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="My to-do..." />
-        <button type="submit">Add</button>
-      </form>
+      <InputBar onSubmit={handleSubmit} />
+      <ItemList items={toDoItems} />
     </div>
   );
 }
 
-/* 3 Components: 
-1. TodoTable: contains the whole app.
-2. InputBar: receives all ToDo items.
-3. ItemTable: displays all inserted ToDos.
+/* 2 Components: 
+1. InputBar: receives all ToDo items.
+2. ItemList: displays all inserted ToDos.
 */
