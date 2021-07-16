@@ -1,37 +1,62 @@
 import "./App.css";
 import InputBar from "./components/InputBar.js";
 import ItemList from "./components/ItemList.js";
-// import { useState } from "react";
-
+import { useState } from "react";
+let nextId = 0;
 export default function App() {
-  // const [inputs, setInputItem] = useState([]);
+  const [toDoItems, setToDoItems] = useState([]);
 
-  const toDoItems = [
-    {
-      todo: "workout", //string
-      isDone: false, //boolean
-    },
-    {
-      todo: "get massage",
-      isDone: true,
-    },
-    {
-      todo: "homework",
-      isDone: false,
-    },
-  ];
-  console.log(toDoItems);
+  // const toDoItems = [
+  //   {
+  //     id: 1,
+  //     todo: "workout", //string
+  //     isDone: false, //boolean
+  //   },
+  //   {
+  //     id: 2,
+  //     todo: "get massage",
+  //     isDone: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     todo: "homework",
+  //     isDone: false,
+  //   },
+  // ];
+  //console.log(toDoItems);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("I got submitted.");
+    console.log(e.target.toDoInput.value);
+    const newToDoItem = e.target.toDoInput.value;
+    const newToDoItems = [
+      ...toDoItems,
+      {
+        id: nextId++,
+        todo: newToDoItem,
+        isDone: false,
+      },
+    ];
+    setToDoItems(newToDoItems);
+    e.target.reset();
+  }
+
+  function handleItemClick(clickedItemId) {
+    console.log(clickedItemId);
+    const editedToDoItems = toDoItems.map((item) => {
+      if (clickedItemId === item.id) {
+        item.isDone = !item.isDone;
+      }
+      return item;
+    });
+    setToDoItems(editedToDoItems);
   }
 
   return (
     <div className="App">
       <h1>To-Do App</h1>
       <InputBar onSubmit={handleSubmit} />
-      <ItemList items={toDoItems} />
+      <ItemList items={toDoItems} onItemClick={handleItemClick} />
     </div>
   );
 }
